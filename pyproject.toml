@@ -1,0 +1,14 @@
+[project]
+name = "fiveaichess"
+version = "0.1.0"
+description = "5AI Chess Project"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["python-chess"]
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["fiveaichess"]

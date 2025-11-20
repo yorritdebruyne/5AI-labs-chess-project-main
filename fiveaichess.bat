@@ -1,0 +1,1 @@
+python -m fiveaichess.engines.example_engine 
