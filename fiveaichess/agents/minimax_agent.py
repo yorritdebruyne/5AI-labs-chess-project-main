@@ -19,7 +19,7 @@ This agent iterates trough all the moves possible and picks the one with the hig
 class MinimaxAgent(Agent):
     name = "5AIChessAgent"
 
-    author = "Sander&Yorrit"
+    author = "SanderENYorrit"
 
     def __init__(self, utility: Utility, time_limit_move: float):
         super().__init__(utility, time_limit_move)
