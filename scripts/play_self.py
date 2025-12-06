@@ -3,6 +3,7 @@ import chess
 from fiveaichess.agents.example_agent import ExampleAgent
 from fiveaichess.utilities.example_utility import ExampleUtility
 from fiveaichess.agents.minimax_agent import MinimaxAgent
+from fiveaichess.utilities.material_utility import MaterialUtility
 
 
 """
@@ -13,7 +14,7 @@ def play_self():
 
     # create the white and black players
 #    white_player = ExampleAgent(ExampleUtility(), 5.0)
-    white_player = MinimaxAgent(ExampleUtility(), 5.0, depth=3)
+    white_player = MinimaxAgent(MaterialUtility(), 5.0, depth=3)
     white_player.name = "White Player"
     black_player = ExampleAgent(ExampleUtility(), 5.0)
 #    black_player = MinimaxAgent(ExampleUtility(), 5.0, depth=2)
