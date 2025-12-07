@@ -33,8 +33,8 @@ class CombinedUtility(Utility):
 
         # Define weights: adjustable if a factor is more important
         material_weight = 1.0
-        mobility_weight = 1
-        kingsafety_weight = 1
+        mobility_weight = 0.2
+        kingsafety_weight = 0.3
         # TODO: add other weights
 
         # Get the evaluation from MaterialUtility (piece values)
