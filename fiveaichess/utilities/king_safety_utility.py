@@ -11,7 +11,7 @@ KingSafetyUtility
 Evaluates a board position based on king safety.
 - Looks at the squares directly in front of the king (rank +1 for White, rank -1 for Black).
 - Checks the three files around the king (file-1, file, file+1).
-- Counts how many of those squares are protected by pawns of the same color.
+- Counts how many of those squares are protected by pieces of the same color.
 - If a square is outside the board (edge/muur), it counts as protection.
 Positive score : WHITE king = safer
 Negative score : BLACK king = safer
@@ -57,6 +57,7 @@ class KingSafetyUtility(Utility):
             # If the square is outside the board, count as protection ("wall")
             if not (0 <= target_file <= 7 and 0 <= target_rank <= 7):
                 safety_points += 1
+                continue
 
             square = chess.square(target_file, target_rank)
             piece = board.piece_at(square)
