@@ -43,6 +43,7 @@ class CombinedUtility(Utility):
         # Get the evaluation from MaterialUtility (piece values)
         material_score = self.material.board_value(board)
         # Get the evaluation from MobilityUtility (number of legal moves)
+        if
         mobility_score = self.mobility.board_value(board)
         # Get the evaluation from KingSafetyUtility (score based on filled/empty squares surrounding king)
         kingsafety_score = self.kingsafety.board_value(board)
