@@ -24,7 +24,7 @@ when they are not relevant anymore.
 class MinimaxAgent(Agent):
     name = "5AIChessAgent"
 
-    author = "Sander&Yorrit"
+    author = "Sander&Yorrit12"
 
     def __init__(self, utility : Utility, time_limit_move : float, depth):
         super().__init__(utility, time_limit_move)
@@ -121,68 +121,75 @@ class MinimaxAgent(Agent):
 
     # Chooses the best current move by evaluating all options with alpha-beta pruning
     def calculate_move(self, board: Board, constraints: dict[str, int] = {}) -> Move:
+        import time
         start_time = time.time()
 
         best_move = None
-
-        # WHITE = maximizing player: wants to maximize score
-        # BLACK = minimzing player: wants to minimize the player's score
         maximizing_player = True if board.turn == chess.WHITE else False
-
-        alpha = - float('inf')
+        alpha = -float('inf')
         beta = float('inf')
+        max_depth = self.depth  # store original search depth
 
         if maximizing_player:
-            best_value = - float('inf')
-            for move in list(board.legal_moves):
-
-                # Check if the maximum calculation time for this move has been reached
+            best_value = -float('inf')
+            for move in board.legal_moves:
+                # Stop if out of time
                 if time.time() - start_time > self.time_limit_move:
-                    break # When time is exceeded
+                    break
 
-                # Play move
                 board.push(move)
-
-                # Calculate new value with minimax
-#                value = self.minimax(board, self.depth - 1, False)
-
-                # Calculate new value with alphabeta pruning
                 value = self.alphabeta(board, self.depth - 1, alpha, beta, False)
-
-                # Reverse move
                 board.pop()
 
-                # Update best_value and best_move if this move is better
+                # Update best move
                 if value > best_value:
                     best_value = value
                     best_move = move
 
+                    # Convert score to centipawns
+                    if abs(best_value) >= 100000:  # checkmate detection
+                        # Mate in N moves
+                        moves_to_mate = 1  # or compute distance if you implement mate-in-N
+                        print(f"info depth {max_depth} score mate {moves_to_mate} pv {best_move.uci()}")
+                    else:
+                        centipawns = int(best_value * 100)
+                        print(f"info depth {max_depth} score cp {centipawns} pv {best_move.uci()}")
+
+                # Update alpha
+                alpha = max(alpha, best_value)
+                if alpha >= beta:
+                    break  # alpha-beta pruning
 
             return best_move
 
         else:
             worst_value = float('inf')
-            for move in list(board.legal_moves):
-
-                # Check if the maximum calculation time for this move has been reached
+            for move in board.legal_moves:
+                # Stop if out of time
                 if time.time() - start_time > self.time_limit_move:
-                    break # When time is exceeded
+                    break
 
-                # Play move
                 board.push(move)
-
-                # Calculate new value with minimax
-#                value = self.minimax(board, self.depth - 1, True)
-
-                # Calculate new value with alphabeta pruning
                 value = self.alphabeta(board, self.depth - 1, alpha, beta, True)
-
-                # Reverse move
                 board.pop()
 
-                # Update worst_value and best_move if this move is better (lower)
                 if value < worst_value:
                     worst_value = value
                     best_move = move
 
+                    # Convert score to centipawns
+                    if abs(worst_value) >= 100000:  # checkmate detection
+                        moves_to_mate = 1  # or compute distance if you implement mate-in-N
+                        print(f"info depth {max_depth} score mate {moves_to_mate} pv {best_move.uci()}")
+                    else:
+                        centipawns = int(worst_value * 100)
+                        print(f"info depth {max_depth} score cp {centipawns} pv {best_move.uci()}")
+
+                # Update beta
+                beta = min(beta, worst_value)
+                if beta <= alpha:
+                    break  # alpha-beta pruning
+
             return best_move
+
+

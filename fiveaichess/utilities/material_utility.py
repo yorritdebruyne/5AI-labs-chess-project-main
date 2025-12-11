@@ -18,11 +18,11 @@ class MaterialUtility(Utility):
     # Values for pieces in a dictionary.
     # King gets no value, because he can't be sacrificed
     piece_values = {
-        chess.PAWN : 1,
-        chess.KNIGHT : 3,
-        chess.BISHOP : 3,
-        chess.ROOK : 5,
-        chess.QUEEN : 9
+        chess.PAWN: 1,
+        chess.KNIGHT: 3,
+        chess.BISHOP: 3,
+        chess.ROOK: 5,
+        chess.QUEEN: 9
     }
 
     # Count all white & black pieces and their value.

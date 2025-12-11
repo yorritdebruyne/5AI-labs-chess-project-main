@@ -38,7 +38,7 @@ class KingSafetyUtility(Utility):
         king_rank = chess.square_rank(king_square)
 
         # For WHITE: pawns are one rank ahead
-        if color == chess.WHITE :
+        if color == chess.WHITE:
             direction = 1
         # For BLACK: pawns are one rank behind
         else:
@@ -51,7 +51,7 @@ class KingSafetyUtility(Utility):
         safety_points = 0
 
         # Check the 3 files surrounding the king (file - 1, file, file + 1)
-        for df in [-1, 0 , 1]:
+        for df in [-1, 0, 1]:
             target_file = king_file + df
 
             # If the square is outside the board, count as protection ("wall")
