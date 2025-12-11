@@ -37,5 +37,5 @@ class MobilityUtility(Utility):
         board.turn = original_board_turn
 
         # Return the difference: positive means White has more mobility
-        return mobility_white - mobility_black
+        return (mobility_white - mobility_black) * 0.5
 

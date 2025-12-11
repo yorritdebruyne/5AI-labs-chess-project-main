@@ -1,6 +1,6 @@
 import chess
 
-from fiveaichess.agents.agent import Agent
+from fiveaichess.agents.minimax_agent import Agent
 
 
 class UCIEngine():

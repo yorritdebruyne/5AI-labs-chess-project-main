@@ -6,6 +6,7 @@ from fiveaichess.utilities.utility import Utility
 from fiveaichess.utilities.material_utility import MaterialUtility
 from fiveaichess.utilities.mobility_utility import MobilityUtility
 from fiveaichess.utilities.king_safety_utility import KingSafetyUtility
+from fiveaichess.utilities.checking import check
 
 
 """
@@ -28,13 +29,15 @@ class CombinedUtility(Utility):
         self.material = MaterialUtility()
         self.mobility = MobilityUtility()
         self.kingsafety = KingSafetyUtility()
+        self.check = check()
 
     def board_value(self, board: Board):
 
         # Define weights: adjustable if a factor is more important
         material_weight = 1.0
-        mobility_weight = 0.2
+        mobility_weight = 0.6
         kingsafety_weight = 0.3
+        checkmate_weight = 1
         # TODO: add other weights
 
         # Get the evaluation from MaterialUtility (piece values)
@@ -44,8 +47,10 @@ class CombinedUtility(Utility):
         # Get the evaluation from KingSafetyUtility (score based on filled/empty squares surrounding king)
         kingsafety_score = self.kingsafety.board_value(board)
         # TODO: add more utilities
+        check_score = self.check.board_value(board)
 
         # Combine the scores using the chosen weights
-        combined_score = material_score * material_weight + mobility_score * mobility_weight + kingsafety_score * kingsafety_weight# TODO: add the rest
+        combined_score = material_score * material_weight + mobility_score * mobility_weight + \
+                         kingsafety_score * kingsafety_weight + check_score * checkmate_weight  # TODO: add the rest
         # Return the final combined evaluation
         return combined_score
