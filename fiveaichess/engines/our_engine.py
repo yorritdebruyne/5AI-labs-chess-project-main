@@ -6,7 +6,7 @@ if __name__ == "__main__":
     # create your utility
     utility = CombinedUtility()
     # create your agent
-    agent = MinimaxAgent(utility, 5.0, depth=3)
+    agent = MinimaxAgent(utility, 5.0, depth=4)
     # create the engine
 
     engine = UCIEngine(agent)

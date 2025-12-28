@@ -24,12 +24,12 @@ class check(Utility):
             if board.is_check():
                 return -5
             elif board.is_checkmate():
-                return -1000
+                return -100000
         else:
             if board.is_check():
                 return 5
             elif board.is_checkmate():
-                return 1000
+                return 100000
         return 0
 
 

@@ -31,6 +31,21 @@ class MinimaxAgent(Agent):
         # Save in class
         self.depth = depth
 
+    # Sort moves in order to make alpha-beta pruning faster
+    def order_moves(self, board: Board):
+        captures = []
+        others = []
+
+        for move in board.legal_moves:
+            if board.is_capture(move):
+                captures.append(move)
+            else:
+                others.append(move)
+        # Sort captures before others
+        return captures + others
+
+
+
     # ---------------------------------------
     # --- Classic minimax without pruning ---
     # ---------------------------------------
@@ -41,6 +56,9 @@ class MinimaxAgent(Agent):
         # If depth = empty or the game is over: give evaluation back
         if depth == 0 or board.is_game_over():
             return self.utility.board_value(board)
+
+        # Use sorted order
+        ordered_moves = self.order_moves(board)
 
         # Player is maximizing player
         if maximizing_player:
@@ -79,10 +97,14 @@ class MinimaxAgent(Agent):
         if depth == 0 or board.is_game_over():
             return self.utility.board_value(board)
 
+        # Use sorted order
+        ordered_moves = self.order_moves(board)
+
         # Player is maximizing player
         if maximizing_player:
             best_value = - float('inf')
-            for move in list(board.legal_moves):
+            # for move in list(board.legal_moves):
+            for move in ordered_moves:
                 # Play move
                 board.push(move)
                 # Calculate new value
@@ -100,7 +122,8 @@ class MinimaxAgent(Agent):
         # Player is minimizing player
         else:
             worst_value = float('inf')
-            for move in list(board.legal_moves):
+            # for move in list(board.legal_moves):
+            for move in ordered_moves:
                 # Play move
                 board.push(move)
                 # Evaluate recursively
@@ -130,9 +153,12 @@ class MinimaxAgent(Agent):
         beta = float('inf')
         max_depth = self.depth  # store original search depth
 
+        ordered_moves = self.order_moves(board)
+
         if maximizing_player:
             best_value = -float('inf')
-            for move in board.legal_moves:
+            # for move in board.legal_moves:
+            for move in ordered_moves:
                 # Stop if out of time
                 if time.time() - start_time > self.time_limit_move:
                     break
@@ -164,7 +190,8 @@ class MinimaxAgent(Agent):
 
         else:
             worst_value = float('inf')
-            for move in board.legal_moves:
+            # for move in board.legal_moves:
+            for move in ordered_moves:
                 # Stop if out of time
                 if time.time() - start_time > self.time_limit_move:
                     break
