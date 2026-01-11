@@ -21,15 +21,15 @@ class check(Utility):
 
     def checkmatePossibility(self, board: Board, color : bool) -> int:
         if color:
-            if board.is_check():
-                return -5
-            elif board.is_checkmate():
-                return -100000
+            if board.is_checkmate():
+                return -1000
+            elif board.is_check():
+                return -2
         else:
-            if board.is_check():
-                return 5
-            elif board.is_checkmate():
-                return 100000
+            if board.is_checkmate():
+                return 1000
+            elif board.is_check():
+                return 2
         return 0
 
 

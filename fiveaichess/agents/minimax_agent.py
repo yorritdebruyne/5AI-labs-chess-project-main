@@ -1,6 +1,6 @@
-import time
+#import time
 import random
-from platform import machine
+#from platform import machine
 
 import chess
 
@@ -24,7 +24,7 @@ when they are not relevant anymore.
 class MinimaxAgent(Agent):
     name = "5AIChessAgent"
 
-    author = "Sander&Yorrit12"
+    author = "Sander&Yorrit18"
 
     def __init__(self, utility : Utility, time_limit_move : float, depth):
         super().__init__(utility, time_limit_move)
@@ -147,7 +147,7 @@ class MinimaxAgent(Agent):
         import time
         start_time = time.time()
 
-        best_move = None
+        best_move = random.choice(list(board.legal_moves))
         maximizing_player = True if board.turn == chess.WHITE else False
         alpha = -float('inf')
         beta = float('inf')
@@ -173,13 +173,13 @@ class MinimaxAgent(Agent):
                     best_move = move
 
                     # Convert score to centipawns
-                    if abs(best_value) >= 100000:  # checkmate detection
-                        # Mate in N moves
-                        moves_to_mate = 1  # or compute distance if you implement mate-in-N
-                        print(f"info depth {max_depth} score mate {moves_to_mate} pv {best_move.uci()}")
-                    else:
-                        centipawns = int(best_value * 100)
-                        print(f"info depth {max_depth} score cp {centipawns} pv {best_move.uci()}")
+                    """
+                    moves = [m.uci() for m in board.move_stack]
+                    print(moves)
+                    print("\n")
+                    """
+                    centipawns = int(best_value * 100)
+                    print(f"info depth {max_depth} score cp {centipawns} pv {best_move.uci()}")
 
                 # Update alpha
                 alpha = max(alpha, best_value)
@@ -204,19 +204,15 @@ class MinimaxAgent(Agent):
                     worst_value = value
                     best_move = move
 
-                    # Convert score to centipawns
-                    if abs(worst_value) >= 100000:  # checkmate detection
-                        moves_to_mate = 1  # or compute distance if you implement mate-in-N
-                        print(f"info depth {max_depth} score mate {moves_to_mate} pv {best_move.uci()}")
-                    else:
-                        centipawns = int(worst_value * 100)
-                        print(f"info depth {max_depth} score cp {centipawns} pv {best_move.uci()}")
+                    centipawns = int(worst_value * 100)
+                    print(f"info depth {max_depth} score cp {centipawns} pv {best_move.uci()}")
 
                 # Update beta
                 beta = min(beta, worst_value)
                 if beta <= alpha:
                     break  # alpha-beta pruning
-
+            if board.is_checkmate():
+                print("its checkmate")
             return best_move
 
 
